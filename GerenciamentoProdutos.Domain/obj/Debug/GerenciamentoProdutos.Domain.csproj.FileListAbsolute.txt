@@ -1,6 +1,0 @@
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\bin\Debug\GerenciamentoProdutos.Domain.dll
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\bin\Debug\GerenciamentoProdutos.Domain.pdb
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\obj\Debug\GerenciamentoProdutos.Domain.csproj.AssemblyReference.cache
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\obj\Debug\GerenciamentoProdutos.Domain.csproj.CoreCompileInputs.cache
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\obj\Debug\GerenciamentoProdutos.Domain.dll
-D:\PROJETOS\GerenciamentoProdutos\GerenciamentoProdutos.Domain\obj\Debug\GerenciamentoProdutos.Domain.pdb

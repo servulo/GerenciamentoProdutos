@@ -1,0 +1,95 @@
+# Visual Studio 2022
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+!packages/repositories.config
+.nuget/
+
+# Roslyn
+roslyn/
+
+# Publicação web
+[Pp]ublish/
+PublishProfiles/
+*.pubxml
+*.pubxml.user
+*.publishproj
+
+# Arquivos de banco de dados local
+*.mdf
+*.ldf
+*.ndf
+App_Data/
+
+# Entity Framework
+# (manter Migrations — são parte do código-fonte)
+
+# Arquivos temporários do Visual Studio
+*.cache
+*.ilk
+*.log
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Relatórios de cobertura e testes
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Arquivos de instalação gerados
+[Ee]xpress/
+$tf/
+
+# Análise de código
+*.CodeAnalysisLog.xml
+*_UpgradeReport_Files/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+smtmpout/
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Variáveis de ambiente e segredos
+*.env
+*.env.local
+secrets.json
+appsettings.*.json
+!appsettings.json
+connectionstrings.config
