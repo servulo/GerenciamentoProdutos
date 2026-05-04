@@ -1,0 +1,15 @@
+﻿@model GerenciamentoProdutos.Web.ViewModels.ProdutoViewModel
+
+@{
+    ViewBag.Title = "Excluir Produto";
+}
+
+<h2>Confirmar Exclusão</h2>
+
+<p>Tem certeza que deseja excluir o produto <strong>@Model.Nome</strong>?</p>
+
+@using (Html.BeginForm())
+{
+    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-default" })
+}

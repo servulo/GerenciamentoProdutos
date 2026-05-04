@@ -1,0 +1,33 @@
+﻿@model IEnumerable<GerenciamentoProdutos.Web.ViewModels.ProdutoViewModel>
+
+@{
+    ViewBag.Title = "Produtos";
+}
+
+<h2>Produtos</h2>
+
+<p>@Html.ActionLink("Novo Produto", "Criar", null, new { @class = "btn btn-primary" })</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Estoque</th>
+        <th>Ações</th>
+    </tr>
+    @foreach (var produto in Model)
+    {
+        <tr>
+            <td>@produto.Nome</td>
+            <td>@produto.Descricao</td>
+            <td>@produto.Preco.ToString("C")</td>
+            <td>@produto.QuantidadeEstoque</td>
+            <td>
+                @Html.ActionLink("Detalhes", "Detalhes", new { id = produto.Id }) |
+                @Html.ActionLink("Editar", "Editar", new { id = produto.Id }) |
+                @Html.ActionLink("Excluir", "Excluir", new { id = produto.Id })
+            </td>
+        </tr>
+    }
+</table>
