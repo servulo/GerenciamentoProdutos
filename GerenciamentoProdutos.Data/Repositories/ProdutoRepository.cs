@@ -1,53 +1,58 @@
 ﻿using GerenciamentoProdutos.Data.Context;
 using GerenciamentoProdutos.Domain.Entities;
 using GerenciamentoProdutos.Domain.Interfaces;
-using System;
+using NHibernate;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GerenciamentoProdutos.Data.Repositories
 {
     public class ProdutoRepository : IProdutoRepository
     {
 
-        private readonly AppDbContext _context;
+        private readonly ISession _session;
 
-        public ProdutoRepository(AppDbContext context)
+        public ProdutoRepository(ISession session)
         {
-            _context = context;
+            _session = session;
         }
 
         public IEnumerable<Produto> ObterTodos()
         {
-            return _context.Produtos;
+            return _session.Query<Produto>();
         }
 
         public Produto ObterPorId(int id)
         {
-            return _context.Produtos.Find(id);
+            return _session.Get<Produto>(id);
         }
 
         public void Adicionar(Produto produto)
         {
-            _context.Produtos.Add(produto);
-            _context.SaveChanges();
+            using (var transaction = _session.BeginTransaction()) 
+            {
+                _session.Save(produto);
+                transaction.Commit();
+            }
         }
 
         public void Atualizar(Produto produto)
         {
-            _context.Entry(produto).State = EntityState.Modified;
-            _context.SaveChanges();
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.Update(produto);
+                transaction.Commit();
+            }
+
         }
 
         public void Remover(int id)
         {
-            var produto = _context.Produtos.Find(id);
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
+            using (var transaction = _session.BeginTransaction()) 
+            { 
+                var produto = _session.Get<Produto>(id);
+                _session.Delete(produto);
+                transaction.Commit();
+            }
         }
 
     }
