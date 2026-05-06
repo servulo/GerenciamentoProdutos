@@ -1,5 +1,4 @@
-﻿using GerenciamentoProdutos.Data.Context;
-using GerenciamentoProdutos.Domain.Entities;
+﻿using GerenciamentoProdutos.Domain.Entities;
 using GerenciamentoProdutos.Domain.Interfaces;
 using NHibernate;
 using System.Collections.Generic;
