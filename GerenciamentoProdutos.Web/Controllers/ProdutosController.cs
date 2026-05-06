@@ -1,8 +1,9 @@
-﻿using GerenciamentoProdutos.Domain.Interfaces;
-using GerenciamentoProdutos.Web.Mappers;
+﻿using AutoMapper;
+using GerenciamentoProdutos.Domain.Interfaces;
 using GerenciamentoProdutos.Web.ViewModels;
 using log4net;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace GerenciamentoProdutos.Web.Controllers
@@ -21,7 +22,7 @@ namespace GerenciamentoProdutos.Web.Controllers
         {
             _log.Info("Listando todos os produtos");
             var produtos = _repository.ObterTodos();
-            return View(ProdutoMapper.ToViewModelList(produtos));
+            return View(Mapper.Map<IEnumerable<ProdutoViewModel>>(produtos));
         }
 
         public ActionResult Criar()
@@ -36,7 +37,7 @@ namespace GerenciamentoProdutos.Web.Controllers
             {
                 try
                 {
-                    _repository.Adicionar(ProdutoMapper.ToEntity(viewModel));
+                    _repository.Adicionar(Mapper.Map(viewModel, new GerenciamentoProdutos.Domain.Entities.Produto()));
                     _log.Info($"Produto criado: {viewModel.Nome}");
                     return RedirectToAction("Index");
                 }
@@ -51,7 +52,8 @@ namespace GerenciamentoProdutos.Web.Controllers
 
         public ActionResult Editar(int id)
         {
-            return View(ProdutoMapper.ToViewModel(_repository.ObterPorId(id)));
+            var produto = _repository.ObterPorId(id);
+            return View(Mapper.Map<ProdutoViewModel>(produto));
         }
 
         [HttpPost]
@@ -61,7 +63,7 @@ namespace GerenciamentoProdutos.Web.Controllers
             {
                 try
                 {
-                    _repository.Atualizar(ProdutoMapper.ToEntity(viewModel));
+                    _repository.Atualizar(Mapper.Map(viewModel, new GerenciamentoProdutos.Domain.Entities.Produto()));
                     _log.Info($"Produto atualizado: ID {viewModel.Id} - {viewModel.Nome}");
                     return RedirectToAction("Index");
                 }
@@ -76,12 +78,12 @@ namespace GerenciamentoProdutos.Web.Controllers
 
         public ActionResult Detalhes(int id)
         {
-            return View(ProdutoMapper.ToViewModel(_repository.ObterPorId(id)));
+            return View(Mapper.Map<ProdutoViewModel>(_repository.ObterPorId(id)));
         }
 
         public ActionResult Excluir(int id)
         {
-            return View(ProdutoMapper.ToViewModel(_repository.ObterPorId(id)));
+            return View(Mapper.Map<ProdutoViewModel>(_repository.ObterPorId(id)));
         }
 
         [HttpPost, ActionName("Excluir")]

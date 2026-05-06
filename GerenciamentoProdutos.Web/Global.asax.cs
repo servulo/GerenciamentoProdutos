@@ -17,6 +17,7 @@ namespace GerenciamentoProdutos.Web
         {
 
             AutofacConfig.RegisterComponents();
+            AutoMapperConfig.RegisterMappings();
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
