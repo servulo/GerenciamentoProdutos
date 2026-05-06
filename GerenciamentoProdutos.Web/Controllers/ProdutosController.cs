@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using GerenciamentoProdutos.Domain.Interfaces;
+using GerenciamentoProdutos.Domain.Entities;
+using GerenciamentoProdutos.Domain.Services;
 using GerenciamentoProdutos.Web.ViewModels;
 using log4net;
 using System;
@@ -10,18 +11,18 @@ namespace GerenciamentoProdutos.Web.Controllers
 {
     public class ProdutosController : Controller
     {
-        private readonly IProdutoRepository _repository;
+        private readonly IProdutoService _service;
         private static readonly ILog _log = LogManager.GetLogger(typeof(ProdutosController));
 
-        public ProdutosController(IProdutoRepository repository)
+        public ProdutosController(IProdutoService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         public ActionResult Index()
         {
             _log.Info("Listando todos os produtos");
-            var produtos = _repository.ObterTodos();
+            var produtos = _service.ObterTodos();
             return View(Mapper.Map<IEnumerable<ProdutoViewModel>>(produtos));
         }
 
@@ -37,9 +38,14 @@ namespace GerenciamentoProdutos.Web.Controllers
             {
                 try
                 {
-                    _repository.Adicionar(Mapper.Map(viewModel, new GerenciamentoProdutos.Domain.Entities.Produto()));
+                    _service.Criar(Mapper.Map<Produto>(viewModel));
                     _log.Info($"Produto criado: {viewModel.Nome}");
                     return RedirectToAction("Index");
+                }
+                catch (ArgumentException ex)
+                {
+                    _log.Warn($"Validação ao criar produto: {ex.Message}");
+                    ModelState.AddModelError("", ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -52,8 +58,7 @@ namespace GerenciamentoProdutos.Web.Controllers
 
         public ActionResult Editar(int id)
         {
-            var produto = _repository.ObterPorId(id);
-            return View(Mapper.Map<ProdutoViewModel>(produto));
+            return View(Mapper.Map<ProdutoViewModel>(_service.ObterPorId(id)));
         }
 
         [HttpPost]
@@ -63,9 +68,14 @@ namespace GerenciamentoProdutos.Web.Controllers
             {
                 try
                 {
-                    _repository.Atualizar(Mapper.Map(viewModel, new GerenciamentoProdutos.Domain.Entities.Produto()));
+                    _service.Atualizar(Mapper.Map<Produto>(viewModel));
                     _log.Info($"Produto atualizado: ID {viewModel.Id} - {viewModel.Nome}");
                     return RedirectToAction("Index");
+                }
+                catch (ArgumentException ex)
+                {
+                    _log.Warn($"Validação ao atualizar produto: {ex.Message}");
+                    ModelState.AddModelError("", ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -78,12 +88,12 @@ namespace GerenciamentoProdutos.Web.Controllers
 
         public ActionResult Detalhes(int id)
         {
-            return View(Mapper.Map<ProdutoViewModel>(_repository.ObterPorId(id)));
+            return View(Mapper.Map<ProdutoViewModel>(_service.ObterPorId(id)));
         }
 
         public ActionResult Excluir(int id)
         {
-            return View(Mapper.Map<ProdutoViewModel>(_repository.ObterPorId(id)));
+            return View(Mapper.Map<ProdutoViewModel>(_service.ObterPorId(id)));
         }
 
         [HttpPost, ActionName("Excluir")]
@@ -91,7 +101,7 @@ namespace GerenciamentoProdutos.Web.Controllers
         {
             try
             {
-                _repository.Remover(id);
+                _service.Remover(id);
                 _log.Info($"Produto excluído: ID {id}");
                 return RedirectToAction("Index");
             }

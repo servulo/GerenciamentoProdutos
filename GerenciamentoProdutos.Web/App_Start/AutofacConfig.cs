@@ -2,7 +2,9 @@
 using Autofac.Integration.Mvc;
 using GerenciamentoProdutos.Data.Context;
 using GerenciamentoProdutos.Data.Repositories;
+using GerenciamentoProdutos.Domain.Implementations;
 using GerenciamentoProdutos.Domain.Interfaces;
+using GerenciamentoProdutos.Domain.Services;
 using NHibernate;
 using System.Reflection;
 using System.Web.Mvc;
@@ -28,6 +30,10 @@ namespace GerenciamentoProdutos.Web.App_Start
             builder.RegisterType<ProdutoRepository>()
                    .As<IProdutoRepository>()
                    .InstancePerRequest();
+
+            builder.RegisterType<ProdutoService>()
+                       .As<IProdutoService>()
+                       .InstancePerRequest();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
