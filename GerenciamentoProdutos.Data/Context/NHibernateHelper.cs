@@ -19,7 +19,6 @@ namespace GerenciamentoProdutos.Data.Context
                     _sessionFactory = CreateSessionFactory();
 
                 return _sessionFactory;
-
             }
         }
 

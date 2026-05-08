@@ -5,7 +5,6 @@ namespace GerenciamentoProdutos.Data.Mappings
 {
     public class ProdutoMap : ClassMap<Produto>
     {
-
         public ProdutoMap() 
         {
 
